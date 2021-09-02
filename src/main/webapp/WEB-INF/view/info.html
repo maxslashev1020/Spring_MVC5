@@ -1,0 +1,34 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<body>
+<h2>User Info</h2>
+<br>
+<form th:method="POST" th:action="@{/saveUser}" th:object="${user}">
+    <div>
+        <label for="name">Name</label>
+        <input type="text" th:field="*{name}" id="name"/>
+
+        <br/>
+
+        <label for="surname">Surname</label>
+        <input type="text" th:field="*{surname}" id="surname"/>
+
+        <br>
+
+        <label for="department">Department</label>
+        <input type="text" th:field="*{department}" id="department"/>
+
+        <br>
+
+        <label for="salary">Salary</label>
+        <input type="number" th:field="*{salary}" id="salary"/>
+
+        <br>
+
+        <input type="submit" value="Add"/>
+    </div>
+</form>
+
+</body>
+
+</html>
