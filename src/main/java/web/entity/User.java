@@ -11,16 +11,16 @@ public class User  {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "surname", nullable = false)
+    @Column(name = "surname")
     private String surname;
 
-    @Column(name = "department", nullable = false)
+    @Column(name = "department")
     private String department;
 
-    @Column(name = "salary", nullable = false)
+    @Column(name = "salary")
     private int salary;
 
 
