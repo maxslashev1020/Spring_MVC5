@@ -22,8 +22,10 @@
         <td th:utext="${list.surname}">surname</td>
         <td th:utext="${list.department}">department</td>
         <td th:utext="${list.salary}">salary</td>
-        <td><a th:href="@{/{id}/edit(id=${list.getId()})}" th:text="UPDATE">id</a></td>
-        <td><form th:method="DELETE" th:action="@{/{id}(id=${list.getId()})}">
+        <td><form th:method="GET" th:action="@{/{id}/edit(id=${list.getId()})}">
+            <input type="submit" value="Update"/>
+        </form></td>
+        <td><form th:method="POST" th:action="@{/{id}/delete(id=${list.getId()})}">
             <input type="submit" value="Delete"/>
         </form></td>
 
