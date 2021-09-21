@@ -1,38 +1,49 @@
 package web.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name="user")
-public class User  {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(name = "username")
+    private String username;
+    @Column(name = "lastname")
+    private String lastname;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "password")
+    private String password;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    private Set<Role> roles;
 
-    @Column(name = "name")
-    private String name;
 
-    @Column(name = "surname")
-    private String surname;
-
-    @Column(name = "department")
-    private String department;
-
-    @Column(name = "salary")
-    private int salary;
-
+    public User(long id, String username, String lastname, String email, String password, Set<Role> roles) {
+        this.id = id;
+        this.username = username;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
 
     public User() {
     }
 
-    public User(long id, String name, String surname, String department, int salary) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.department = department;
-        this.salary = salary;
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public long getId() {
@@ -43,36 +54,61 @@ public class User  {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public String getSurname() {
-        return surname;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public String getDepartment() {
-        return department;
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public int getSalary() {
-        return salary;
+    public String getEmail() {
+        return email;
     }
 
-    public void setSalary(int salary) {
-        this.salary = salary;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
 
