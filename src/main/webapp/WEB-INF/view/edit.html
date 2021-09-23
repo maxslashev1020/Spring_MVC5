@@ -3,27 +3,19 @@
 <body>
 <h2>Update User</h2>
 <br>
-<form th:method="POST" th:action="@{/{id}(id=${user.getId()})}" th:object="${user}">
+<form th:method="PATCH" th:action="@{/{id}(id=${user.getId()})}" th:object="${user}">
     <div>
-
         <label for="username">Username</label>
         <input type="text" th:field="*{username}" id="username"/>
-
         <br/>
-
         <label for="lastname">Lastname</label>
         <input type="text" th:field="*{lastname}" id="lastname"/>
-
         <br>
-
         <label for="password">Password</label>
         <input type="text" th:field="*{password}" id="password"/>
-
         <br>
-
         <label for="email">Email</label>
         <input type="text" th:field="*{email}" id="email"/>
-
         <br>
         <br>
         <br>
@@ -33,7 +25,5 @@
     </div>
     <a th:href="@{/logout}">LOGOUT</a>
 </form>
-
 </body>
-
 </html>

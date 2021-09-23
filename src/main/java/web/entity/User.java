@@ -1,9 +1,7 @@
 package web.entity;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
@@ -25,9 +23,7 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Set<Role> roles;
 
-
-    public User(long id, String username, String lastname, String email, String password, Set<Role> roles) {
-        this.id = id;
+    public User(String username, String lastname, String email, String password, Set<Role> roles) {
         this.username = username;
         this.lastname = lastname;
         this.email = email;
@@ -35,8 +31,7 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public User() {
-    }
+    public User() { }
 
     public String getLastname() {
         return lastname;

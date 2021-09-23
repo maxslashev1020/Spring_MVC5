@@ -21,8 +21,12 @@ import java.util.Properties;
 @EnableJpaRepositories("web.dao")
 @PropertySource({"classpath:db.properties"})
 public class AppConfig {
-    @Autowired
+
     private Environment env;
+    @Autowired
+    public void setEnv(Environment env) {
+        this.env = env;
+    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean getEntityManagerFactoryBean() {
@@ -65,6 +69,4 @@ public class AppConfig {
         properties.put("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
         return properties;
     }
-
-
 }

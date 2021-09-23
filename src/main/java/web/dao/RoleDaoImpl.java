@@ -2,18 +2,15 @@ package web.dao;
 
 import org.springframework.stereotype.Repository;
 import web.entity.Role;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-
 public class RoleDaoImpl implements RoleDao {
     @PersistenceContext
     private EntityManager entityManager;
-
 
     public void addRole(Role role) {
         String str = role.getName();
@@ -21,7 +18,6 @@ public class RoleDaoImpl implements RoleDao {
             Role manager = entityManager.merge(role);
             entityManager.persist(manager);
         }
-
     }
 
     @Override

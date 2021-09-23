@@ -4,30 +4,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import web.dao.UserDao;
 import web.entity.Role;
 import web.entity.User;
 import web.service.RoleService;
 import web.service.UserService;
-import web.service.UserServiceImpl;
-
-import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Controller
 public class UserController implements WebMvcConfigurer {
+    private final UserService userService;
+    private final RoleService roleService;
     @Autowired
-    private UserService userService;
-    @Autowired
-    private RoleService roleService;
+    public UserController(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
+    }
 
     @GetMapping(value = "/user")
     public String userInfo(@AuthenticationPrincipal User user, Model model){
@@ -57,12 +51,9 @@ public class UserController implements WebMvcConfigurer {
         }
         user.setRoles(roleSet);
         userService.addUser(user);
-
-
         return "redirect:/admin";
     }
 
-    //страница для редактирования юзеров
     @GetMapping(value = "/{id}/edit")
     public String editUserForm(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
@@ -70,7 +61,7 @@ public class UserController implements WebMvcConfigurer {
         return "edit";
     }
 
-    @PostMapping(value = "/{id}")
+    @PatchMapping(value = "/{id}")
     public String editUser(@ModelAttribute User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
         Set<Role> roleSet = new HashSet<>();
         for (String roles : checkBoxRoles) {
@@ -81,7 +72,7 @@ public class UserController implements WebMvcConfigurer {
         return "redirect:/admin";
     }
 
-    @PostMapping(value = "/remove/{id}")
+    @DeleteMapping(value = "/remove/{id}")
     public String removeUser(@PathVariable("id") long id) {
         userService.removeUserById(id);
         return "redirect:/admin";
